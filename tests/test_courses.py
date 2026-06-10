@@ -1,0 +1,54 @@
+import pytest
+from playwright.sync_api import sync_playwright, expect
+
+
+@pytest.mark.courses
+@pytest.mark.regression
+def test_empty_courses_list():
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=False)
+        context = browser.new_context()
+        page = context.new_page()
+
+        page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
+
+        email_user = page.get_by_test_id('registration-form-email-input').locator('input')
+        email_user.fill('user.email.@mail.ru')
+
+        name_user = page.get_by_test_id('registration-form-username-input').locator('input')
+        name_user.fill('User')
+
+        password_user = page.get_by_test_id('registration-form-password-input').locator('input')
+        password_user.fill('password')
+
+        button_registration = page.get_by_test_id('registration-page-registration-button')
+        button_registration.click()
+
+        context.storage_state(path='browser_state.json')
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=False)
+        context = browser.new_context(storage_state='browser_state.json')
+        page = context.new_page()
+
+        page.goto('https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses')
+
+        alert_courses = page.get_by_test_id('courses-list-toolbar-title-text')
+        expect(alert_courses).to_have_text("Courses")
+
+        empty_view_icon = page.get_by_test_id('courses-list-empty-view-icon')
+        expect(empty_view_icon).to_be_visible()
+
+        empty_view_title = page.get_by_test_id('courses-list-empty-view-title-text')
+        expect(empty_view_title).to_be_visible()
+        expect(empty_view_title).to_have_text("There is no results")
+
+        empty_view_description = page.get_by_test_id('courses-list-empty-view-description-text')
+        expect(empty_view_description).to_be_visible()
+        expect(empty_view_description).to_have_text('Results from the load test pipeline will be displayed here')
+
+        page.wait_for_timeout(3000)
+
+
+
+
