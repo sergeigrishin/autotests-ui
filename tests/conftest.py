@@ -1,4 +1,4 @@
-from playwright.sync_api import sync_playwright, Playwright, Page
+from playwright.sync_api import Playwright, Page
 import pytest
 
 
