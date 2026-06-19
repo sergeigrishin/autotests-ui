@@ -41,11 +41,38 @@ class CoursesListPage(Basepage):
     def click_create_course_button(self):
         expect(self.courses_button).to_be_visible()
 
-    def check_visible_course_card(self, title:str, ):
-        expect(self.course_image).to_be_visible()
+    def check_visible_course_card(
+            self,
+            index: int,
+            title:str,
+            max_score:str,
+            min_score:str,
+            estimated_time:str):
+        expect(self.course_image.nth(index)).to_be_visible()
 
-        expect(self.course_title).to_be_visible()
-        expect(self.course_title).to_have_text(title)
+        expect(self.course_title.nth(index)).to_be_visible()
+        expect(self.course_title.nth(index)).to_have_text(title)
 
-        expect(self.course_max_text).to_be_visible()
-        expect(self.course_title).to_have_text('title')
+        expect(self.course_max_text.nth(index)).to_be_visible()
+        expect(self.course_max_text.nth(index)).to_have_text(f'Max score: {max_score}')
+
+        expect(self.course_min_text.nth(index)).to_be_visible()
+        expect(self.course_min_text.nth(index)).to_have_text(f'Max score: {min_score}')
+
+        expect(self.course_estimated_time_text.nth(index)).to_be_visible()
+        expect(self.course_estimated_time_text.nth(index)).to_have_text(f'Estimated time: {estimated_time}')
+
+
+    def click_edit_course(self, index:int):
+        self.course_menu_button.nth(index).click()
+
+        expect(self.course_menu_edit.nth(index)).to_be_visible()
+        expect(self.course_menu_edit.nth(index)).click()
+
+
+
+    def click_delete_course(self, index:int):
+        self.course_menu_button.nth(index).click()
+
+        expect(self.course_menu_delete.nth(index)).to_be_visible()
+        expect(self.course_menu_delete.nth(index)).click()
