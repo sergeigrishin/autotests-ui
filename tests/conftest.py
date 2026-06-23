@@ -3,7 +3,7 @@ import pytest
 
 
 @pytest.fixture
-def chromium_page(playwright: Playwright) -> Page:
+def chromium_page(playwright: Playwright):
     browser = playwright.chromium.launch(headless=False)
     yield browser.new_page()
     browser.close()

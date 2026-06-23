@@ -1,8 +1,8 @@
-from pages.base_page import Basepage
+from pages.base_page import BasePage
 from playwright.sync_api import Page, expect
 
 
-class CoursesListPage(Basepage):
+class CoursesListPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -57,7 +57,7 @@ class CoursesListPage(Basepage):
         expect(self.course_max_text.nth(index)).to_have_text(f'Max score: {max_score}')
 
         expect(self.course_min_text.nth(index)).to_be_visible()
-        expect(self.course_min_text.nth(index)).to_have_text(f'Max score: {min_score}')
+        expect(self.course_min_text.nth(index)).to_have_text(f'Min score: {min_score}')
 
         expect(self.course_estimated_time_text.nth(index)).to_be_visible()
         expect(self.course_estimated_time_text.nth(index)).to_have_text(f'Estimated time: {estimated_time}')

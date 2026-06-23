@@ -1,6 +1,6 @@
 import pytest
 from playwright.sync_api import Playwright
-
+from pages.base_page import BasePage
 
 @pytest.fixture
 def chromium_page(playwright: Playwright):
