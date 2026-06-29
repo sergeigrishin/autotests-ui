@@ -1,6 +1,7 @@
 from components.base_component import BaseComponent
 from playwright.sync_api import Page, expect
 
+
 class NavbarComponent(BaseComponent):
     def __init__(self, page: Page):
         super().__init__(page)
@@ -13,6 +14,6 @@ class NavbarComponent(BaseComponent):
         expect(self.app_title).to_have_text("UI Course")
 
         expect(self.welcome_title).to_be_visible()
-        expect(self.welcome_title).to_have_text(f'Welcome, {username}')
+        expect(self.welcome_title).to_have_text(f'Welcome, {username}!')
 
 
