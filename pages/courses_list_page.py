@@ -11,6 +11,8 @@ class CoursesListPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
+        self.navbar = NavbarComponent(page)
+        self.sidebar = SidebarComponent(page)
         self.empty_view = EmptyViewComponent(page, 'courses-list')
         self.course_view = CourseViewComponent(page)
         self.sidebar_component = SidebarComponent(page)
