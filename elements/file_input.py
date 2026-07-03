@@ -3,6 +3,6 @@ from playwright_authorization import login_button
 
 
 class FileInput(BaseElement):
-    def set_input_file(self, file:str, **kwargs):
-        locator = self.get_locator(**kwargs)
+    def set_input_file(self, file:str,nth:int=0, **kwargs):
+        locator = self.get_locator(nth, **kwargs)
         locator.set_input_files(file)
