@@ -3,7 +3,7 @@ from playwright.sync_api import Page, expect
 from components.courses.course_view_menu_component import CourseViewMenuComponent
 from elements.text import Text
 from elements.image import Image
-from elements.
+
 
 
 class CourseViewComponent(BaseComponent):
