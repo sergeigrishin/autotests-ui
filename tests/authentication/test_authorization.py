@@ -1,6 +1,6 @@
 import pytest
-from pages.login_page import LoginPage
-from components.courses.create_course_exercise_form_component import CreateCourseExerciseFormComponent
+from pages.authentication.login_page import LoginPage
+
 
 @pytest.mark.regression
 @pytest.mark.authorization
