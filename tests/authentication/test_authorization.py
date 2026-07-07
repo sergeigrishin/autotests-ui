@@ -3,7 +3,7 @@ from pages.authentication.login_page import LoginPage
 from pages.authentication.registration_page import RegistrationPage
 from pages.dashboard.dashboard_page import DashboardPage
 from pages.authentication.registration_page import RegistrationPage
-
+import allure
 
 @pytest.mark.regression
 @pytest.mark.authorization

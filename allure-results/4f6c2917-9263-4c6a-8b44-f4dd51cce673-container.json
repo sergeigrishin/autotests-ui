@@ -1,0 +1,24 @@
+{
+  "uuid": "c599f748-47b0-4973-99db-91353b4cfde1",
+  "children": [
+    "c60099c8-1fdb-4dee-9254-54fc3f9e8640"
+  ],
+  "befores": [
+    {
+      "name": "playwright",
+      "status": "passed",
+      "start": 1783414376377,
+      "stop": 1783414376739
+    }
+  ],
+  "afters": [
+    {
+      "name": "playwright::0",
+      "status": "passed",
+      "start": 1783414410757,
+      "stop": 1783414410769
+    }
+  ],
+  "start": 1783414376377,
+  "stop": 1783414410769
+}
