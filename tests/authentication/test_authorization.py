@@ -5,11 +5,18 @@ from tools.allure.tags import AllureTag
 from pages.dashboard.dashboard_page import DashboardPage
 from pages.authentication.registration_page import RegistrationPage
 import allure
+from tools.allure.epics import AllureEpic
+from tools.allure.stories import AllureStories
+from tools.allure.features import AllureFeatures
+
 
 
 @pytest.mark.regression
 @pytest.mark.authorization
 @allure.tag(AllureTag.REGISTRATION, AllureTag.AUTHORIZATION)
+@allure.epic(AllureEpic.LMS)
+@allure.feature(AllureFeatures.AUTHENTICATION)
+@allure.story(AllureStories.AUTHORIZATION)
 class TestAuthorization:
     @pytest.mark.parametrize(
         "email, password",
