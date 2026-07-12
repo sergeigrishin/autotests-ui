@@ -1,19 +1,12 @@
 import allure
 
-@allure.step('Open browser')
-def open_browser():
-    ...
-
-@allure.step('Creating course')
-def create_course():
-    ...
-
-@allure.step('Closing browser')
-def closing_browser():
-    ...
+@allure.step("Creating course with title '{title}'")
+def create_course(title: str):
+    pass
 
 
 def test_feature():
-    open_browser()
-    create_course()
-    closing_browser()
+    create_course(title="Locust")
+    create_course(title="Pytest")
+    create_course(title="Python")
+    create_course(title="Playwright")
