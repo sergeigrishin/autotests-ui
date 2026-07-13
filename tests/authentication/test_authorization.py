@@ -47,7 +47,7 @@ class TestAuthorization:
         registration_page.click_registration_button()
 
         dashboard_page.dashboard_toolbar_view.check_visible()
-        dashboard_page.navbar.check_visible("username")
+        dashboard_page.navbar.check_visible(username="username")
         dashboard_page.sidebar.check_visible()
         dashboard_page.sidebar.click_logout()
 
