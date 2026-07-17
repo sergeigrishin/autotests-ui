@@ -2,7 +2,7 @@ import allure
 import pytest
 from playwright.sync_api import Playwright
 from _pytest.fixtures import SubRequest
-from tools.platwright.pages import initialize_playwright_page
+from tools.platwright.page import initialize_playwright_page
 from pages.authentication.registration_page import RegistrationPage
 
 
