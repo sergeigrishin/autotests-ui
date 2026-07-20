@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Self
 
-from pydantic import EmailStr, FilePath, HttpUrl, DirectoryPath, Field, BaseModel
+from pydantic import EmailStr, FilePath, HttpUrl, DirectoryPath, BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -37,20 +37,20 @@ class Settings(BaseSettings):
     tracing_dir: DirectoryPath
     browser_state_file: FilePath
 
-    @classmethod
-    def initialize(cls) -> Self:  # Возвращает экземпляр класса Settings
+    def get_base_url(self) -> str:
+        base = str(self.app_url)
+        return base if base.endswith("/") else f"{base}/"
 
+    @classmethod
+    def initialize(cls) -> Self:
         videos_dir = DirectoryPath("./videos")
         tracing_dir = DirectoryPath("./tracing")
         browser_state_file = FilePath("browser-state.json")
 
-        # Создаем директории, если они не существуют
-        videos_dir.mkdir(exist_ok=True)  # Если директория существует, то игнорируем ошибку
+        videos_dir.mkdir(exist_ok=True)
         tracing_dir.mkdir(exist_ok=True)
-        # Создаем файл состояния браузера, если его нет
-        browser_state_file.touch(exist_ok=True)  # Если файл существует, то игнорируем ошибку
+        browser_state_file.touch(exist_ok=True)
 
-        # Возвращаем модель с инициализированными значениями
         return Settings(
             videos_dir=videos_dir,
             tracing_dir=tracing_dir,
