@@ -11,7 +11,7 @@ from tools.allure.stories import AllureStories
 from tools.allure.tags import AllureTag
 from tools.routes import AppRoute
 
-
+@pytest.mark.xdist_group(name="authorization-group")
 @pytest.mark.regression
 @pytest.mark.registration
 @allure.tag(AllureTag.REGRESSION, AllureTag.REGISTRATION)
