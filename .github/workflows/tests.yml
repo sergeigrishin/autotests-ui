@@ -56,6 +56,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4 # Обновили до стабильной v4
         if: always()
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages # Явно указываем правильное имя ветки через дефис
           publish_dir: allure-report # Новый JS-экшен генерирует отчет именно в эту папку
 
