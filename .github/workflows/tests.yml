@@ -30,8 +30,10 @@ jobs:
           playwright install --with-deps
       #Запускаем автотесты
       - name: Run Playwright tests with pytest and generate Allure result
+        if: always()
         run: |
-          pytest -m regression --alluredir=./allure-results --numprocesses 2 --headless
+          xvfb-run pytest -m regression --alluredir=./allure-results --numprocesses 2
+
       #Получает Allure истории
       - name: Get Allure history
         uses: actions/checkout@v3
