@@ -2,11 +2,12 @@ name: UI-tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
+
+permissions:
+  contents: write
 
 jobs:
   run-tests:
@@ -25,38 +26,32 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          python -m playwright install --with-deps
 
-      # Корректная установка Playwright и системных зависимостей
-      - name: Install Playwright browsers and deps
-        run: sudo npx playwright install --with-deps
-
-      - name: Run Playwright tests with pytest and generate Allure result
+      - name: Run tests
         run: |
-          xvfb-run pytest -m regression --alluredir=./allure-results --numprocesses 2
+          pytest -m regression --alluredir=./allure-results
 
-      # ИСПРАВЛЕНО: Скачиваем историю именно в папку allure-history
       - name: Get Allure history
-        uses: actions/checkout@v4
         if: always()
+        uses: actions/checkout@v4
         continue-on-error: true
         with:
           ref: gh-pages
-          path: allure-history
+          path: gh-pages
 
-      # Генерируем отчет (он объединит allure-results и историю из allure-history)
-      - name: Allure Report action from marketplace
+      - name: Build Allure report
+        if: always()
         uses: mgrybyk-org/allure-report-branch-js-action@v1
-        if: always()
         with:
-          report_dir: allure-results
           allure_results: allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
           allure_history: allure-history
-          keep_reports: 20
 
-      # Публикуем сгенерированный отчет на GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
         if: always()
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
