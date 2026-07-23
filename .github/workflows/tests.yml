@@ -41,7 +41,7 @@ jobs:
           path: gh-pages
 
       - name: Allure Report action from marketplace
-        uses: mgrybyk-org/allure-report-branch-action@v1.11
+        uses: mgrybyk-org/allure-report-branch-js-action@v1
         if: always()
         with:
           allure_results: allure-results
