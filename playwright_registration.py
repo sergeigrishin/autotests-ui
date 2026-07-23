@@ -1,9 +1,9 @@
 from asyncio import wait_for
-
+from config import Settings
 from playwright.sync_api import sync_playwright, expect
 
 with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=Settings.headless)
     context = browser.new_context()
     page = context.new_page()
 
@@ -25,7 +25,7 @@ with sync_playwright() as playwright:
 
 
 with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=Settings.headless)
     context = browser.new_context(storage_state='browser-state.json')
     page = browser.new_page()
 

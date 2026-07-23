@@ -1,7 +1,9 @@
 from playwright.sync_api import sync_playwright, expect
 
+from config import Settings
+
 with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=Settings.headless)
     context = browser.new_context()
     page = context.new_page()
 
@@ -22,7 +24,7 @@ with sync_playwright() as playwright:
     context.storage_state(path='browser_state.json')
 
 with sync_playwright() as playwright:
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=Settings.headless)
     context = browser.new_context(storage_state='browser_state.json')
     page = context.new_page()
 
