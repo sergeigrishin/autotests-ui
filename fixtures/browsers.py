@@ -2,7 +2,7 @@ import pytest
 from _pytest.fixtures import SubRequest
 from playwright.sync_api import Playwright, Page
 
-from config import settings, Browser
+from config import settings, Browser, Settings
 from pages.authentication.registration_page import RegistrationPage
 from tools.platwright.page import initialize_playwright_page
 from tools.routes import AppRoute
@@ -19,7 +19,7 @@ def page(request: SubRequest, playwright: Playwright) -> Page:
 
 @pytest.fixture(scope="session")
 def initialize_browser_state(playwright: Playwright):
-    browser = playwright.chromium.launch(headless=True)
+    browser = playwright.chromium.launch(headless=Settings.headless)
     context = browser.new_context(base_url=settings.get_base_url())
     page = context.new_page()
 

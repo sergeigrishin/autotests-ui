@@ -1,6 +1,6 @@
 name: UI-tests
 
-#Где запускаем
+#Где запускаем тесты
 on:
   push:
     branches:
@@ -11,27 +11,28 @@ on:
 
 jobs:
   run-tests:
+    #Запуск тестов на ubuntu
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-
+      #Устанавливаем питон
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-
+      #Устанавливаем зависимости
       - name: Install dependencies  #Устанавливаем зависимости
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           playwright install --with-deps
-
+      #Запускаем автотесты
       - name: Run Playwright tests with pytest and generate Allure result
         run: |
           pytest -m regression --alluredir=./allure-results --numprocesses 2 --headless
-
+      #Получает Allure истории
       - name: Get Allure history
         uses: actions/checkout@v3
         if: always()
@@ -39,7 +40,7 @@ jobs:
         with:
           ref: gh-pages
           path: gh-pages
-
+      #Скачиваем Allure
       - name: Allure Report action from marketplace
         uses: mgrybyk-org/allure-report-branch-js-action@v1
         if: always()
@@ -48,7 +49,7 @@ jobs:
           allure_history: allure-history
           keep_reports: 20
 
-
+      #Публикуем всё на гитХаб паджест
       - name: Deploy report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v2
         env:
