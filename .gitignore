@@ -1,3 +1,17 @@
-/allure-result/
-/allure-results/
-/allure-report/
+#pychrm
+.idea
+
+#python
+venv
+__pycache__
+
+#allure
+allure-result
+allure-results
+allure-report
+
+#testing artifacts
+videos
+*.html
+*.json
+tracing
