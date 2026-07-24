@@ -70,10 +70,11 @@ jobs:
       # 4. Ставим официальный Allure CLI нужной версии
       - name: Install Allure CLI
         run: |
-            curl -L "$ALLURE_URL" -o allure-2.24.0.tgz
-            tar -zxvf allure-2.24.0.tgz
-            sudo mv allure-2.24.0 /opt/allure
-            sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+          LOCAL_ALLURE_URL="https://github.com"
+          curl -L "$LOCAL_ALLURE_URL" -o allure-2.24.0.tgz
+          tar -zxvf allure-2.24.0.tgz
+          sudo mv allure-2.24.0 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
       # 5. Копируем историю из старых отчетов в новые результаты, чтобы работал график трендов
       - name: Copy Allure history
