@@ -46,29 +46,59 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
+      # 1. Скачиваем ветку с готовыми отчетами (gh-pages) в папку gh-pages
+      - name: Check out gh-pages repository
         uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: gh-pages
 
+      # 2. Скачиваем свежие результаты тестов из артефактов в папку allure-results
       - name: Download Allure results
         uses: actions/download-artifact@v4
         with:
           name: allure-results
           path: allure-results
 
-      - name: Generates Allure Report with history
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
+      # 3. Ставим Java (она нужна для работы Allure CLI)
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
-          allure_results: allure-results
-          allure_history: allure-history
+          distribution: 'temurin'
+          java-version: '17'
 
+      # 4. Ставим официальный Allure CLI нужной версии
+      - name: Install Allure CLI
+        run: |
+          wget https://github.com
+          tar -zxvf allure-2.24.0.tgz
+          sudo mv allure-2.24.0 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+
+      # 5. Копируем историю из старых отчетов в новые результаты, чтобы работал график трендов
+      - name: Copy Allure history
+        run: |
+          if [ -d "gh-pages/history" ]; then
+            mkdir -p allure-results/history
+            cp -r gh-pages/history/* allure-results/history/
+          fi
+
+      # 6. Генерируем чистый итоговый отчет в папку allure-report
+      - name: Generate Allure Report
+        run: |
+          allure generate allure-results --clean -o allure-report
+
+      # 7. Переносим историю из только что сгенерированного отчета обратно в корень (нужно для деплоя)
+      - name: Update history directory for gh-pages
+        run: |
+          cp -r allure-report/history gh-pages/ history/ || true
+          cp -r allure-report/* gh-pages/
+
+      # 8. Публикуем всё содержимое папки gh-pages на GitHub Pages
       - name: Deploy report to Github Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+          publish_dir: gh-pages
